@@ -76,7 +76,7 @@ const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier: strin
 
 
 
-const formattedText = async(lineWidth: number, textAlign: string, textSpacing: string, boldWords: string[], italicString: string[], stringReplacement: { cursus: string; lacinia: string; }, randomJokesIndentifier: string[], text: string) => {
+export const formattedText = async(lineWidth: number, textAlign: string, textSpacing: string, boldWords: string[], italicString: string[], stringReplacement: { cursus: string; lacinia: string; }, randomJokesIndentifier: string[], text: string) => {
     //Todo: Split the sentence to an array of words
     let splitText = text.split(' ');
 
