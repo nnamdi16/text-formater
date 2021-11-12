@@ -7,14 +7,16 @@
         "test": "tests"
     },
     "scripts": {
-        "test": "jest --coverage",
-        "test:watch": "jest --watch",
+        "test": "jest --coverage --detectOpenHandles",
+        "test:watch": "jest --coverage --watchAll",
         "build": "rimraf dist && tsc",
         "preserve": "npm run build",
         "serve": "nodemon  dist/index.js",
         "prestart": "npm run build",
         "start": "ts-node ./src/index.ts",
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts",
+        "view:coverage": "serve coverage/lcov-report",
+        "clean": "rm -rf coverage src/**/*.js src/**/*.map"
     },
     "repository": {
         "type": "git",
