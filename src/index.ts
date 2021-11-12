@@ -1,18 +1,21 @@
 
 import axios from 'axios';
+export const BASE_URL = `https://api.chucknorris.io/jokes/random`
 
-const fetchRandomJoke = async() => {
+export const fetchRandomJoke = async() => {
     try {
-        const baseUrl = `https://api.chucknorris.io/jokes/random`
-        const response = await axios.get(baseUrl)
+        const response = await axios.get(BASE_URL);
+
+       if (response.data) {
         return await (response.data.value).split(' ');
+       }
         
     } catch (error) {
-        console.log(error)
+        return [];
     }
 }
 
-const boldString = (text: string, boldStringIdentifiers: string[], italicStringIdentifiers: string[], replaceStringIdentifiers: any) => {
+export const boldString = (text: string, boldStringIdentifiers: string[], italicStringIdentifiers: string[], replaceStringIdentifiers: any) => {
 
     const replacement = {
         bold: Array.from((new Set(boldStringIdentifiers))),
@@ -49,7 +52,7 @@ const boldString = (text: string, boldStringIdentifiers: string[], italicStringI
 
 }
 
-const textAlignment = (text: string | any[], lineWidth: number, type: string) => {
+export const textAlignment = (text: string | any[], lineWidth: number, type: string) => {
     const sizeOfText = text.length
     const spacing = lineWidth - sizeOfText;
     if (spacing > 0 && type.toLowerCase() === 'right') {
@@ -66,7 +69,7 @@ const textAlignment = (text: string | any[], lineWidth: number, type: string) =>
 
 }
 
-const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier: string | any[]) => {
+export const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier: string | any[]) => {
     //Todo: Remove punctuations from text.
     const removePunctuations = word.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
 
@@ -164,17 +167,10 @@ export const formattedText = async(lineWidth: number, textAlign: string, textSpa
         countSentenceLength = sentenceFormation.length
     }
     //Todo: Return the entire formatted sentence.
-    // console.log(sentenceArray.join('\n'));
+  
     return (textSpacing.toLocaleLowerCase() === 'double') ? sentenceArray.join('\n\n') : sentenceArray.join('\n')
    
-    // return boldString(sentenceArray.toString(), ['Aliquam', 'Mauris'], ['elit'], [{ cursus: "CURSUS" }, { lacinia: 'malesuada nunc' }]);
-}
-const words = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet lacus eu purus malesuada sodales. Nunc a risus nunc.\nPraesent eget volutpat eros. Fusce mollis gravida nunc, vitae accumsan ligula varius vitae. Duis in tellus non est pulvinar efficitur quis ac tortor. Aliquam dictum, magna quis venenatis pharetra, leo sapien mollis mauris, et vestibulum arcu est eget turpis. Etiam tortor erat, lacinia et faucibus vitae, maximus et elit.\nDonec nisl nisi, imperdiet vitae felis ut, maximus condimentum ante. Curabitur efficitur sem sed ligula eleifend varius. Mauris et risus quis libero mattis auctor id ut orci.\nAliquam cursus sapien et euismod vestibulum. In maximus dolor eu vulputate tempus. Aenean ultricies nisl id elit mattis, vitae finibus libero interdum. Vestibulum ornare quam nec ornare fermentum.`
 
 
-// const result = async() => {
-//     await formattedText(100, 'center', '', ['Aliquam', 'Mauris', 'Aliquam'], ['elit'], { cursus: "CURSUS", lacinia: 'malesuada nunc' }, ["tortor", "fames"], words)
-// };
-// result()
 
-formattedText(100, 'left', 'double', ['Aliquam', 'Mauris', 'Aliquam'], ['elit'], { cursus: "CURSUS", lacinia: 'malesuada nunc' }, ["tortor", "fames"], words).then((res) => console.log(res))
+// formattedText(100, 'left', 'double', ['Aliquam', 'Mauris', 'Aliquam'], ['elit'], { cursus: "CURSUS", lacinia: 'malesuada nunc' }, ["tortor", "fames"], words).then((res) => console.log(res))
