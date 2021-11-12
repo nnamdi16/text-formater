@@ -16,10 +16,10 @@ const fetchJokes = async() => {
     // console.log(fetchJokes())
 
 const boldString = (text, replaceBoldValues, replaceItalicValues, replaceString) => {
-    //Todo: Ensure you use Map to reflect non-repetition of replacement parameters
+
     const replacement = {
-            bold: replaceBoldValues,
-            italic: replaceItalicValues,
+            bold: [...(new Set(replaceBoldValues))],
+            italic: [...(new Set(replaceItalicValues))],
             stringReplacement: replaceString
 
         }
@@ -182,7 +182,7 @@ const splitString = (str = '') => {
 
 // console.log(words.replace(/\n/g, " "))
 
-const checkResult = formattedText(100, 'center', '', ['Aliquam', 'Mauris'], ['elit'], { cursus: "CURSUS", lacinia: 'malesuada nunc' }, ["tortor", "fames"], words)
+const checkResult = formattedText(100, 'center', '', ['Aliquam', 'Mauris', 'Aliquam'], ['elit'], { cursus: "CURSUS", lacinia: 'malesuada nunc' }, ["tortor", "fames"], words)
 
 console.log(checkResult)
     // const watch = 'Mauris'
