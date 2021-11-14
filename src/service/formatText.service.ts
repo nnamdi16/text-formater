@@ -1,33 +1,33 @@
-import { FormatTextWithNewLineHandler, FormatTextBelowLineWidthHandler, FormatTextAboveLineWidthHandler } from './formatTextHandler.service';
+import { FormatTextWithLineBreakHandler, FormatTextBelowLineWidthHandler, FormatTextAboveLineWidthHandler } from './formatTextHandler.service';
 import { formatString } from '../util/util';
 import { IReplaceString } from '../randomJokes.response';
 
 import { checkRandomJokesIndentifier } from '../util/util';
 import { FormatTextBuilder } from '../model/formatTextBuilder';
 
-const formatTextWithNewLineHandler = new FormatTextWithNewLineHandler();
+const formatTextWithLineBreakHandler = new FormatTextWithLineBreakHandler();
 const formatStringLess = new FormatTextBelowLineWidthHandler();
 const formatStringGreat = new FormatTextAboveLineWidthHandler();
-formatTextWithNewLineHandler.setNext(formatStringLess).setNext(formatStringGreat);
+formatTextWithLineBreakHandler.setNext(formatStringLess).setNext(formatStringGreat);
 
 export class FormatTextDetails {
-  handler= formatTextWithNewLineHandler;
+  handler= formatTextWithLineBreakHandler;
   lineWidth: number;
   text: string;
-  alignText: string;
-  textSpacing: string;
-  italics: string[];
-  bold: string[];
+  textAlignment: string;
+  lineSpacing: string;
+  italicsStrings: string[];
+  boldStrings: string[];
   replaceStrings: IReplaceString;
   randomJokesIdentifier: string[]
   
   constructor(stringFormatBuilder:FormatTextBuilder) {
     this.lineWidth = stringFormatBuilder.lineWidth;
     this.text = stringFormatBuilder.text;
-    this.alignText = stringFormatBuilder.alignText;
-    this.textSpacing = stringFormatBuilder.textSpacing;
-    this.italics = stringFormatBuilder.italics;
-    this.bold = stringFormatBuilder.bold;
+    this.textAlignment = stringFormatBuilder.textAlignment;
+    this.lineSpacing = stringFormatBuilder.lineSpacing;
+    this.italicsStrings = stringFormatBuilder.italicsStrings;
+    this.boldStrings = stringFormatBuilder.boldStrings;
     this.replaceStrings = stringFormatBuilder.replaceStrings;
     this.randomJokesIdentifier = stringFormatBuilder.randomJokesIdentifier;
 
@@ -47,15 +47,15 @@ export class FormatTextDetails {
       }
      
       const splitWord = splittedText[index].split(/([?,!,.,\n,''])/);
-      const formattedString = (splitWord.map((text: string) => formatString({ text, bold:this.bold, italics: this.italics, replaceString: this.replaceStrings }))).join('');
-      const formattedStringResult = await (this.handler.handle({ formattedString, splittedText, sentenceWidthCounter, sentenceArray, lineSentence, randomJokeCounter, index, lineWidth:this.lineWidth, textAlign:this.alignText, textSpacing:this.textSpacing, randomJokesIdentifier: this.randomJokesIdentifier, text:this.text, bold: this.bold, italics:this.italics, replaceString:this.replaceStrings }))
+      const formattedString = (splitWord.map((text: string) => formatString({ text, boldStrings:this.boldStrings, italicsStrings: this.italicsStrings, replaceStrings: this.replaceStrings }))).join('');
+      const formattedStringResult = await (this.handler.handle({ formattedString, splittedText, sentenceWidthCounter, sentenceArray, lineSentence, randomJokeCounter, index, lineWidth:this.lineWidth, textAlignment:this.textAlignment, lineSpacing:this.lineSpacing, randomJokesIdentifier: this.randomJokesIdentifier, text:this.text, boldStrings: this.boldStrings, italicsStrings:this.italicsStrings, replaceStrings:this.replaceStrings }))
       sentenceWidthCounter = formattedStringResult.lineSentence.length
       sentenceArray = formattedStringResult.sentenceArray;
       splittedText = formattedStringResult.splittedText;
       lineSentence = formattedStringResult.lineSentence;
       index = formattedStringResult.index
     }
-    return (this.textSpacing.toLocaleLowerCase() === 'double') ? sentenceArray.join('\n\n') : sentenceArray.join('\n')
+    return (this.lineSpacing.toLocaleLowerCase() === 'double') ? sentenceArray.join('\n\n') : sentenceArray.join('\n')
   }
 
 }

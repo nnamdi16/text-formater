@@ -1,4 +1,4 @@
-import { IFormatTextParameter, IHandler, IFormatTextResponse } from './../model/textFormatDetails.dto';
+import { IFormatTextParameter, IHandler, IFormatTextResponse } from '../model/formatTextDetails.dto';
 import { alignText, fetchRandomJoke } from './../util/util';
 
 
@@ -20,12 +20,12 @@ abstract class AbstractHandler implements IHandler {
   
 }
 
-export class FormatTextWithNewLineHandler extends AbstractHandler {
+export class FormatTextWithLineBreakHandler extends AbstractHandler {
    public async handle(request: IFormatTextParameter): Promise<IFormatTextResponse> {
      if (request.formattedString?.indexOf("\n") > -1) {
        request.lineSentence += `${request.formattedString.substring(0, request.formattedString.indexOf("\n"))}`;
       //  console.log(request.lineSentence);
-      request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlign));
+      request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlignment));
       request.sentenceWidthCounter = 0;
       if (request.randomJokeCounter > 0) {
         const unformattedStrings: string[] = request.splittedText.slice(request.index + 1);
@@ -63,7 +63,7 @@ export class FormatTextBelowLineWidthHandler extends AbstractHandler {
 export class FormatTextAboveLineWidthHandler extends AbstractHandler {
   public async  handle(request: IFormatTextParameter): Promise<IFormatTextResponse> {
  if ((request.sentenceWidthCounter + request.formattedString.length) > request.lineWidth) {
-  request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlign));
+  request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlignment));
   request.lineSentence = ` ${request.formattedString}`;
   request.sentenceWidthCounter = 0;
   return {lineSentence:request.lineSentence, sentenceArray:request.sentenceArray, splittedText:request.splittedText, index:request.index}

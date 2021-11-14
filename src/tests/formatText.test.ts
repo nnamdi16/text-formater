@@ -1,5 +1,5 @@
 import { FormatTextBuilder } from '../model/formatTextBuilder';
-import { IFormatString } from '../model/textFormatDetails.dto';
+import { IFormatString } from '../model/formatTextDetails.dto';
 import { BASE_URL, fetchRandomJoke, formatString } from '../util/util';
 import axios from '../__mocks__/axios'
 import { alignText, checkRandomJokesIndentifier } from '../util/util';
@@ -78,9 +78,9 @@ describe('Format Sting Weight', () => {
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
     const editParameters: IFormatString = {
       text: sampleWord,
-      bold: boldStringIdentifier,
-      italics: italicStringIdentifier,
-      replaceString: replaceWordsIndentifier
+      boldStrings: boldStringIdentifier,
+      italicsStrings: italicStringIdentifier,
+      replaceStrings: replaceWordsIndentifier
     }
     const formatStringWeight = formatString(editParameters);
     const result = `**${sampleWord}**`
@@ -98,9 +98,9 @@ describe('Format Sting Weight', () => {
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
     const editParameters: IFormatString = {
       text: sampleWord,
-      bold: boldStringIdentifier,
-      italics: italicStringIdentifier,
-      replaceString: replaceWordsIndentifier
+      boldStrings: boldStringIdentifier,
+      italicsStrings: italicStringIdentifier,
+      replaceStrings: replaceWordsIndentifier
     }
     const formatStringWeight = formatString(editParameters);
     expect(formatStringWeight).toBe(sampleWord)
@@ -118,9 +118,9 @@ describe('Format Sting Weight', () => {
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
     const editParameters: IFormatString = {
       text: sampleWord,
-      bold: boldStringIdentifier,
-      italics: italicStringIdentifier,
-      replaceString: replaceWordsIndentifier
+      boldStrings: boldStringIdentifier,
+      italicsStrings: italicStringIdentifier,
+      replaceStrings: replaceWordsIndentifier
     }
     const formatStringWeight = formatString(editParameters);
     const result = `_${sampleWord}_`
@@ -140,9 +140,9 @@ describe('Format Sting Weight', () => {
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
     const editParameters: IFormatString = {
       text: sampleWord,
-      bold: boldStringIdentifier,
-      italics: italicStringIdentifier,
-      replaceString: replaceWordsIndentifier
+      boldStrings: boldStringIdentifier,
+      italicsStrings: italicStringIdentifier,
+      replaceStrings: replaceWordsIndentifier
     }
     const formatStringWeight = formatString(editParameters);
     const result = `CURSUS`
@@ -203,11 +203,11 @@ describe('String alignment', () => {
  
 describe('Format String', () => {
   const lineWidth = 50
-  const textAlign = 'left';
-  const textSpacing = { single: 'single', double: 'double' }
+  const textAlignment = 'left';
+  const lineSpacing = { single: 'single', double: 'double' }
   const randomJokesIdentifier=["tortor", "fames"]
-  const bold = ['Aliquam', 'Mauris', 'Aliquam']
-  const italics = ['elit']
+  const boldStrings = ['Aliquam', 'Mauris', 'Aliquam']
+  const italicsStrings = ['elit']
   const replaceString = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
   beforeEach(() => {
     mockedAxios.get.mockImplementationOnce(() => Promise.resolve({
@@ -222,11 +222,11 @@ describe('Format String', () => {
     it('should align a string with single spacing', async () => {
       const stringFormat = new FormatTextBuilder().setLineWidth(lineWidth)
       .setText(text)
-      .setAlignText(textAlign)
-      .setTextSpacing(textSpacing.single)
+      .setTextAlignment(textAlignment)
+      .setLineSpacing(lineSpacing.single)
       .setRandomJokeIdentifier(randomJokesIdentifier)
-      .setItalics(italics)
-      .setBold(bold)
+      .setItalicsStrings(italicsStrings)
+      .setBoldStrings(boldStrings)
       .setReplaceStrings(replaceString).build();
    
       const formatString = await stringFormat.formatText();
@@ -239,11 +239,11 @@ describe('Format String', () => {
       const stringFormat = new FormatTextBuilder()
       .setLineWidth(lineWidth)
       .setText(text)
-      .setAlignText(textAlign)
-      .setTextSpacing(textSpacing.double)
+      .setTextAlignment(textAlignment)
+      .setLineSpacing(lineSpacing.double)
       .setRandomJokeIdentifier(randomJokesIdentifier)
-      .setItalics(italics)
-      .setBold(bold)
+      .setItalicsStrings(italicsStrings)
+      .setBoldStrings(boldStrings)
       .setReplaceStrings(replaceString).build();
 
       const formatString = await stringFormat.formatText();

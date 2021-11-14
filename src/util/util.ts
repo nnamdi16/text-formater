@@ -25,11 +25,11 @@ enum TextAlign {
 }
 
 export const formatString = (editParameters: IEditString) => {
-    const {bold, italics, replaceString, text} = editParameters
+    const {boldStrings, italicsStrings, replaceStrings, text} = editParameters
     const formatStringParameters = {
-        boldStringIdentifier: Array.from((new Set(bold))),
-        italicStringIdentifier: Array.from((new Set(italics))),
-        stringReplacementIdentifier: replaceString
+        boldStringIdentifier: Array.from((new Set(boldStrings))),
+        italicStringIdentifier: Array.from((new Set(italicsStrings))),
+        stringReplacementIdentifier: replaceStrings
 
     }
   const {boldStringIdentifier, italicStringIdentifier, stringReplacementIdentifier}= formatStringParameters
