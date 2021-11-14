@@ -1,91 +1,5 @@
-import { StringFormatterBuilder } from './model/StringFormatterBuilder';
-import { IRandomJokesResponse, IEditString, IFormatText } from './randomJokes.response';
-
-import axios, {AxiosResponse} from 'axios';
-export const BASE_URL = `https://api.chucknorris.io/jokes/random`
-
-export const fetchRandomJoke = async(): Promise<string[]> => {
-    try {
-        const response:AxiosResponse<IRandomJokesResponse> = await (await axios.get(BASE_URL));
-
-        let jokeResponse: string[] = [];
-        if (response.data) {
-        // console.log(response.data)
-        jokeResponse  =  await (response.data.value).split(' ');
-    }    
-        return jokeResponse; 
-    } catch (error) {
-        return [];
-    }
-}
-
-enum TextAlign {
-    CENTER = 'center',
-    LEFT = 'left',
-    RIGHT = 'right'
-}
-
-export const boldString = (editParameters: IEditString) => {
-    const {bold, italics, replaceString, text} = editParameters
-    const replacement = {
-        bold: Array.from((new Set(bold))),
-        italic: Array.from((new Set(italics))),
-        stringReplacement: replaceString
-
-    }
-    const isBoldStringIdentifier = replacement.bold.includes(text);
-    const isItalicStringIdentifier = replacement.italic.includes(text);
-    const isreplaceStringIdentifier = Object.keys(replacement.stringReplacement).includes(text);
-    if (!isBoldStringIdentifier && !isItalicStringIdentifier && !isreplaceStringIdentifier) {
-        return text;
-    }
-    const results = [];
-    results.push(text)
-    if (isBoldStringIdentifier) {
-        const boldValuePosition = replacement.bold.indexOf(text);
-        const replaceValue: string = replacement.bold[boldValuePosition];
-        results[results.length - 1] = results[results.length - 1].split(replaceValue).join(`**${replaceValue}**`)
-    }
-
-    if (isItalicStringIdentifier) {
-        const italicValuePosition = replacement.italic.indexOf(text);
-        const replaceValue: string= replacement.italic[italicValuePosition]
-        results[results.length - 1] = results[results.length - 1].split(replaceValue).join(`_${replaceValue}_`)
-
-    }
-
-    if (isreplaceStringIdentifier) {
-        results[results.length - 1] = results[results.length - 1].split(text).join(replacement.stringReplacement[text])
-    }
-    return results.toString();
 
 
-}
-
-export const textAlignment = (text: string, lineWidth: number, type: string) => {
-    const sizeOfText = text.length
-    const spacing = lineWidth - sizeOfText;
-    if (spacing > 0 && type.toLowerCase() === TextAlign.RIGHT) {
-        return ' '.repeat(spacing) + text;
-
-    } else if (spacing > 0 && type.toLowerCase() === TextAlign.LEFT) {
-        return text + ' '.repeat(spacing);
-    } else if (spacing > 0 && type.toLowerCase() === TextAlign.CENTER) {
-        const centerSpacing = Math.floor(spacing / 2);
-        return ' '.repeat(centerSpacing) + text + ' '.repeat(centerSpacing);
-    } else {
-        return text;
-    }
-
-}
-
-export const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier: string []) => {
-    //Todo: Remove punctuations from text.
-    const removePunctuations = word.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
-
-    //Todo: Check if the string exist as part of strings to identify where to add random jokes
-    return randomJokesIndentifier.includes(removePunctuations);
-}
 
 
 
@@ -208,7 +122,7 @@ const replaceString = {
 //     console.log(res)
 // }))
 
-// const stringFormat = new StringFormatterBuilder()
+// const stringFormat = new TextFormatDetailsBuilder()
 //     .setLineWidth(lineWidth)
 //     .setText(text)
 //     .setAlignText(textAlign)
