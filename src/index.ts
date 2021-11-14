@@ -1,6 +1,7 @@
 import { IRandomJokesResponse, IEditString, IFormatText } from './randomJokes.response';
 
 import axios, {AxiosResponse} from 'axios';
+import { textFormatter, formatStringNewLine } from './model/textFormat';
 export const BASE_URL = `https://api.chucknorris.io/jokes/random`
 
 export const fetchRandomJoke = async(): Promise<string[]> => {
@@ -8,7 +9,8 @@ export const fetchRandomJoke = async(): Promise<string[]> => {
         const response:AxiosResponse<IRandomJokesResponse> = await (await axios.get(BASE_URL));
 
         let jokeResponse: string[] = [];
-    if (response.data) {
+        if (response.data) {
+        // console.log(response.data)
         jokeResponse  =  await (response.data.value).split(' ');
     }    
         return jokeResponse; 
@@ -41,13 +43,13 @@ export const boldString = (editParameters: IEditString) => {
     results.push(text)
     if (isBoldStringIdentifier) {
         const boldValuePosition = replacement.bold.indexOf(text);
-        const replaceValue: any = replacement.bold[boldValuePosition];
+        const replaceValue: string = replacement.bold[boldValuePosition];
         results[results.length - 1] = results[results.length - 1].split(replaceValue).join(`**${replaceValue}**`)
     }
 
     if (isItalicStringIdentifier) {
         const italicValuePosition = replacement.italic.indexOf(text);
-        const replaceValue: any= replacement.italic[italicValuePosition]
+        const replaceValue: string= replacement.italic[italicValuePosition]
         results[results.length - 1] = results[results.length - 1].split(replaceValue).join(`_${replaceValue}_`)
 
     }
@@ -60,7 +62,7 @@ export const boldString = (editParameters: IEditString) => {
 
 }
 
-export const textAlignment = (text: string | any[], lineWidth: number, type: string) => {
+export const textAlignment = (text: string, lineWidth: number, type: string) => {
     const sizeOfText = text.length
     const spacing = lineWidth - sizeOfText;
     if (spacing > 0 && type.toLowerCase() === TextAlign.RIGHT) {
@@ -77,7 +79,7 @@ export const textAlignment = (text: string | any[], lineWidth: number, type: str
 
 }
 
-export const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier: string | any[]) => {
+export const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier: string []) => {
     //Todo: Remove punctuations from text.
     const removePunctuations = word.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
 
@@ -88,7 +90,8 @@ export const checkRandomJokesIndentifier = (word: string, randomJokesIndentifier
 
 
 export const formattedText = async (formatTextParameter: IFormatText) => {
-    const {lineWidth, textAlign, textSpacing, randomJokesIndentifier, text,bold, italics, replaceString  } = formatTextParameter;
+    //Todo: Test when this parameters are not provided. Implement negative testing
+    const {lineWidth, textAlign = TextAlign.LEFT, textSpacing ='single', randomJokesIdentifier, text, bold, italics, replaceString  } = formatTextParameter;
     //Todo: Split the sentence to an array of words
     let splitText = text.split(' ');
 
@@ -107,7 +110,7 @@ export const formattedText = async (formatTextParameter: IFormatText) => {
     //Todo: Loop through the splitted sentences to format them based on certain criteria
     for (let index = 0; index < splitText.length; index++) {
 
-        const isRandomJokeIdentifier = checkRandomJokesIndentifier(splitText[index], randomJokesIndentifier)
+        const isRandomJokeIdentifier = checkRandomJokesIndentifier(splitText[index], randomJokesIdentifier)
 
         //Todo: If the string exist increment the value of countRandomString
         if (isRandomJokeIdentifier) {
@@ -119,7 +122,7 @@ export const formattedText = async (formatTextParameter: IFormatText) => {
         const formatString = (splitWord.map((item: string) => boldString({text:item, bold, italics, replaceString}))).join('')
 
         //Todo: Check if a new line character is attached to a formatted string
-        if (formatString.indexOf("\n") !== -1) {
+        if (formatString.indexOf("\n") > -1) {
             //Todo: Seperate the formatString  from the new line character and add it to the already existing formatted text
             sentenceFormation += `${formatString.substring(0, formatString.indexOf("\n"))}`;
 
@@ -185,3 +188,22 @@ export const formattedText = async (formatTextParameter: IFormatText) => {
 
     // formattedText(100, 'left', 'double', ['Aliquam', 'Mauris', 'Aliquam'], ['elit'], { cursus: "CURSUS", lacinia: 'malesuada nunc' }, ["tortor", "fames"], words).then((res) => console.log(res))
 }
+
+
+
+const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet lacus eu purus malesuada sodales. Nunc a risus nunc.\nPraesent eget volutpat eros. Fusce mollis gravida nunc, vitae accumsan ligula varius vitae. Duis in tellus non est pulvinar efficitur quis ac tortor. Aliquam dictum, magna quis venenatis pharetra, leo sapien mollis mauris, et vestibulum arcu est eget turpis. Etiam tortor erat, lacinia et faucibus vitae, maximus et elit.\nDonec nisl nisi, imperdiet vitae felis ut, maximus condimentum ante. Curabitur efficitur sem sed ligula eleifend varius. Mauris et risus quis libero mattis auctor id ut orci.\nAliquam cursus sapien et euismod vestibulum. In maximus dolor eu vulputate tempus. Aenean ultricies nisl id elit mattis, vitae finibus libero interdum. Vestibulum ornare quam nec ornare fermentum.';
+const lineWidth = 80
+const textAlign = 'center'
+const textSpacing = 'single'
+const randomJokesIdentifier = ["tortor", "fames"];
+const italics = ["elit"]
+const bold = ["Aliquam", "Mauris"]
+const replaceString = {
+  cursus: 'CURSUS', 
+  lacinia: 'malesuada nunc'
+}
+console.log(textFormatter(formatStringNewLine, { text, lineWidth, textAlign, textSpacing, randomJokesIdentifier, replaceString, bold, italics }).then(res => console.log(res)));
+
+// console.log(formattedText({ text, lineWidth, textAlign, textSpacing, randomJokesIdentifier, replaceString, bold, italics }).then(res => {
+//     console.log(res)
+// }))
