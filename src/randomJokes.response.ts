@@ -7,9 +7,9 @@ export interface IRandomJokesResponse {
 
 export interface IEditString {
   readonly text: string;
-  readonly bold: string[];
-  readonly italics: string[];
-  readonly replaceString: IReplaceString;
+  readonly boldStrings: string[];
+  readonly italicsStrings: string[];
+  readonly replaceStrings: IReplaceString;
 
 
 }
