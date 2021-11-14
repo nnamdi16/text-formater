@@ -1,6 +1,10 @@
-import { IEditString, IFormatText } from './../randomJokes.response';
-import { fetchRandomJoke, boldString, textAlignment, checkRandomJokesIndentifier, formattedText, BASE_URL } from '../index';
+import { FormatTextBuilder } from './../model/formatTextBuilder';
+import { IFormatString } from './../model/textFormatDetails.dto';
+import { BASE_URL, fetchRandomJoke, formatString } from './../util/util';
 import axios from '../__mocks__/axios'
+import { alignText, checkRandomJokesIndentifier } from '../util/util';
+
+
 jest.mock("axios")
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -72,13 +76,13 @@ describe('Format Sting Weight', () => {
     const boldStringIdentifier = ['flabby', 'jammy'];
     const italicStringIdentifier = ['jean'];
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
-    const editParameters: IEditString = {
+    const editParameters: IFormatString = {
       text: sampleWord,
       bold: boldStringIdentifier,
       italics: italicStringIdentifier,
       replaceString: replaceWordsIndentifier
     }
-    const formatStringWeight = boldString(editParameters);
+    const formatStringWeight = formatString(editParameters);
     const result = `**${sampleWord}**`
     expect(formatStringWeight).toMatch(result)
     
@@ -92,13 +96,13 @@ describe('Format Sting Weight', () => {
     const boldStringIdentifier = ['jammy'];
     const italicStringIdentifier = ['jean'];
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
-    const editParameters: IEditString = {
+    const editParameters: IFormatString = {
       text: sampleWord,
       bold: boldStringIdentifier,
       italics: italicStringIdentifier,
       replaceString: replaceWordsIndentifier
     }
-    const formatStringWeight = boldString(editParameters);
+    const formatStringWeight = formatString(editParameters);
     expect(formatStringWeight).toBe(sampleWord)
     
     
@@ -112,13 +116,13 @@ describe('Format Sting Weight', () => {
     const boldStringIdentifier = ['flabby', 'jammy'];
     const italicStringIdentifier = ['jean'];
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
-    const editParameters: IEditString = {
+    const editParameters: IFormatString = {
       text: sampleWord,
       bold: boldStringIdentifier,
       italics: italicStringIdentifier,
       replaceString: replaceWordsIndentifier
     }
-    const formatStringWeight = boldString(editParameters);
+    const formatStringWeight = formatString(editParameters);
     const result = `_${sampleWord}_`
     expect(formatStringWeight).toMatch(result)
   });
@@ -134,13 +138,13 @@ describe('Format Sting Weight', () => {
     const boldStringIdentifier = ['flabby', 'jammy'];
     const italicStringIdentifier = ['jean'];
     const replaceWordsIndentifier = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
-    const editParameters: IEditString = {
+    const editParameters: IFormatString = {
       text: sampleWord,
       bold: boldStringIdentifier,
       italics: italicStringIdentifier,
       replaceString: replaceWordsIndentifier
     }
-    const formatStringWeight = boldString(editParameters);
+    const formatStringWeight = formatString(editParameters);
     const result = `CURSUS`
     expect(formatStringWeight).toMatch(result)
   });
@@ -153,7 +157,7 @@ describe('String alignment', () => {
   describe('Align string Right', () => {
    it('should align a string to the right', () => {
      const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-     const formatStringAlignment = textAlignment(sampleWord, 60, 'RIGHT' );
+     const formatStringAlignment = alignText(sampleWord, 60, 'RIGHT' );
      const result = `     Lorem ipsum dolor sit amet, consectetur adipiscing elit`
      expect(formatStringAlignment).toMatch(result)
      
@@ -164,7 +168,7 @@ describe('String alignment', () => {
   describe('Align string Left', () => {
     it('should align a string to the left', () => {
       const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-      const formatStringAlignment = textAlignment(sampleWord, 60, 'LEFT' );
+      const formatStringAlignment = alignText(sampleWord, 60, 'LEFT' );
       const result = `Lorem ipsum dolor sit amet, consectetur adipiscing elit     `
       expect(formatStringAlignment).toMatch(result)
       
@@ -175,7 +179,7 @@ describe('String alignment', () => {
    describe('Align string Center', () => {
     it('should align a string to the center', () => {
       const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-      const formatStringAlignment = textAlignment(sampleWord, 60, 'CENTER' );
+      const formatStringAlignment = alignText(sampleWord, 60, 'CENTER' );
       const result = `  Lorem ipsum dolor sit amet, consectetur adipiscing elit  `
       expect(formatStringAlignment).toMatch(result)
       
@@ -186,7 +190,7 @@ describe('String alignment', () => {
    describe('String without alignment specified', () => {
     it('should return a string with aligning it when the alignment type is not specified', () => {
       const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-      const formatStringAlignment = textAlignment(sampleWord, 60, '' );
+      const formatStringAlignment = alignText(sampleWord, 60, '' );
       const result = `Lorem ipsum dolor sit amet, consectetur adipiscing elit`
       expect(formatStringAlignment).toMatch(result)
       
@@ -198,11 +202,6 @@ describe('String alignment', () => {
 })
  
 describe('Format String', () => {
-  beforeEach(() => {
-    mockedAxios.get.mockImplementationOnce(() => Promise.resolve({
-      data
-    }))
-  })
   const lineWidth = 50
   const textAlign = 'left';
   const textSpacing = { single: 'single', double: 'double' }
@@ -210,39 +209,45 @@ describe('Format String', () => {
   const bold = ['Aliquam', 'Mauris', 'Aliquam']
   const italics = ['elit']
   const replaceString = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
+  beforeEach(() => {
+    mockedAxios.get.mockImplementationOnce(() => Promise.resolve({
+      data
+    }))
+  })
+
   
 
 
   describe('Format a string based on parmeters specified such as line width ', () => {
     it('should align a string with single spacing', async () => {
-      const formatTextParameter: IFormatText = {
-        lineWidth,
-        textAlign,
-        textSpacing: textSpacing.single,
-        randomJokesIdentifier,
-        text,
-        bold,
-        italics,
-        replaceString
-      }
-      const formatString = await formattedText(formatTextParameter);
-     const result = `Lorem ipsum dolor sit amet, consectetur adipiscing\n_elit_. Morbi sit amet lacus eu purus malesuada   \ntortor sodales. Nunc a risusnunc.                 \nMr johnson is the only one who can overtake Chuck \nNorris in a moped race. Chuck Norris then         \ndropkicked him continusly and killed him. Praesent`
+      const stringFormat = new FormatTextBuilder().setLineWidth(lineWidth)
+      .setText(text)
+      .setAlignText(textAlign)
+      .setTextSpacing(textSpacing.single)
+      .setRandomJokeIdentifier(randomJokesIdentifier)
+      .setItalics(italics)
+      .setBold(bold)
+      .setReplaceStrings(replaceString).build();
+   
+      const formatString = await stringFormat.formatText();
+      const result = `Lorem ipsum dolor sit amet, consectetur adipiscing\n_elit_. Morbi sit amet lacus eu purus malesuada   \ntortor sodales. Nunc a risusnunc.                 \nMr johnson is the only one who can overtake Chuck \nNorris in a moped race. Chuck Norris then         \ndropkicked him continusly and killed him. Praesent`
      expect(formatString).toBe(result)
      
    });
     
     it('should align a string with double spacing', async () => {
-      const formatTextParameter: IFormatText = {
-        lineWidth,
-        textAlign,
-        textSpacing: textSpacing.double,
-        randomJokesIdentifier,
-        text,
-        bold,
-        italics,
-        replaceString
-      }
-    const formatString = await formattedText(formatTextParameter);
+      const stringFormat = new FormatTextBuilder()
+      .setLineWidth(lineWidth)
+      .setText(text)
+      .setAlignText(textAlign)
+      .setTextSpacing(textSpacing.double)
+      .setRandomJokeIdentifier(randomJokesIdentifier)
+      .setItalics(italics)
+      .setBold(bold)
+      .setReplaceStrings(replaceString).build();
+
+      const formatString = await stringFormat.formatText();
+      console.log(formatString)
    const result = `Lorem ipsum dolor sit amet, consectetur adipiscing\n\n_elit_. Morbi sit amet lacus eu purus malesuada   \n\ntortor sodales. Nunc a risusnunc.                 \n\nMr johnson is the only one who can overtake Chuck \n\nNorris in a moped race. Chuck Norris then         \n\ndropkicked him continusly and killed him. Praesent`
    expect(formatString).toBe(result)
    
