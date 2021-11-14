@@ -206,7 +206,7 @@ describe('Format String', () => {
   const lineWidth = 50
   const textAlign = 'left';
   const textSpacing = { single: 'single', double: 'double' }
-  const randomJokesIndentifier=["tortor", "fames"]
+  const randomJokesIdentifier=["tortor", "fames"]
   const bold = ['Aliquam', 'Mauris', 'Aliquam']
   const italics = ['elit']
   const replaceString = { cursus: "CURSUS", lacinia: 'malesuada nunc' }
@@ -219,7 +219,7 @@ describe('Format String', () => {
         lineWidth,
         textAlign,
         textSpacing: textSpacing.single,
-        randomJokesIndentifier,
+        randomJokesIdentifier,
         text,
         bold,
         italics,
@@ -236,7 +236,7 @@ describe('Format String', () => {
         lineWidth,
         textAlign,
         textSpacing: textSpacing.double,
-        randomJokesIndentifier,
+        randomJokesIdentifier,
         text,
         bold,
         italics,
