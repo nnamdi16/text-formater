@@ -9,12 +9,12 @@ export interface IEditString {
   readonly text: string;
   readonly bold: string[];
   readonly italics: string[];
-  readonly replaceString:IReplaceString
+  readonly replaceString: IReplaceString;
 
 
 }
 
-interface IReplaceString {
+export interface IReplaceString {
   [key:string] : string
 }
 
@@ -22,6 +22,6 @@ export interface IFormatText extends IEditString{
   readonly lineWidth: number;
   readonly textAlign: string;
   readonly textSpacing: string;
-  readonly randomJokesIndentifier:string[]
+  readonly randomJokesIdentifier:string[]
 
 }
