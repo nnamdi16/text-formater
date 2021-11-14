@@ -1,6 +1,6 @@
-import { FormatTextBuilder } from './../model/formatTextBuilder';
-import { IFormatString } from './../model/textFormatDetails.dto';
-import { BASE_URL, fetchRandomJoke, formatString } from './../util/util';
+import { FormatTextBuilder } from '../model/formatTextBuilder';
+import { IFormatString } from '../model/textFormatDetails.dto';
+import { BASE_URL, fetchRandomJoke, formatString } from '../util/util';
 import axios from '../__mocks__/axios'
 import { alignText, checkRandomJokesIndentifier } from '../util/util';
 
