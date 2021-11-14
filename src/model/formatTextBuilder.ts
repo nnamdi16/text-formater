@@ -5,10 +5,10 @@ export class FormatTextBuilder {
 
   lineWidth!: number;
   text!: string;
-  alignText!: string;
-  textSpacing!: string;
-  italics!: string[];
-  bold!: string[];
+  textAlignment!: string;
+  lineSpacing!: string;
+  italicsStrings!: string[];
+  boldStrings!: string[];
   replaceStrings!: IReplaceString;
   randomJokesIdentifier!: string[];
 
@@ -22,23 +22,23 @@ export class FormatTextBuilder {
       return this;
   }
 
-  setAlignText(alignText:string) {
-    this.alignText = alignText;
+  setTextAlignment(textAlignment:string) {
+    this.textAlignment = textAlignment;
       return this;
   }
 
-  setTextSpacing(textSpacing: string) {
-      this.textSpacing = textSpacing
+  setLineSpacing(lineSpacing: string) {
+      this.lineSpacing = lineSpacing
       return this;
   }
   
-    setItalics(italics: string[]) {
-      this.italics = italics;
+    setItalicsStrings(italicsStrings: string[]) {
+      this.italicsStrings = italicsStrings;
       return this;
     }
   
-    setBold(bold: string[]) {
-      this.bold = bold;
+    setBoldStrings(boldStrings: string[]) {
+      this.boldStrings = boldStrings;
       return this;
     }
   
