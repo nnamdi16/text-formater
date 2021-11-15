@@ -1,6 +1,7 @@
 
 
 import axios, {AxiosResponse} from 'axios';
+import { TextAlign } from '../model/formatTextDetails.dto';
 import { IRandomJokesResponse, IEditString } from '../randomJokes.response';
 export const BASE_URL = `https://api.chucknorris.io/jokes/random`
 
@@ -18,11 +19,7 @@ export const fetchRandomJoke = async(): Promise<string[]> => {
     }
 }
 
-enum TextAlign {
-    CENTER = 'center',
-    LEFT = 'left',
-    RIGHT = 'right'
-}
+
 
 export const formatString = (editParameters: IEditString) => {
     const {boldStrings, italicsStrings, replaceStrings, text} = editParameters
