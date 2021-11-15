@@ -45,7 +45,7 @@ stringFormat.formatText().then(res => console.log(res))
 
 ## TECHNICAL CHOICES AND TRADE-OFFS
 
-Design the text formatter required adopting a hybrid paradigm which includes Object Oriented Programming (OOP)  and Functional programming (FP) . Also Typescript was adopted relying on its advanced statical type system to improve the code readablility and debugging as well as it supports OOP. Design patterns such as Builder design pattern, Module design pattern and the Chain of responsibility design pattern was adopted.
+Designing the text formatter required adopting a hybrid paradigm which includes Object Oriented Programming (OOP)  and Functional programming (FP) . Also Typescript was adopted, relying on its advanced statically type system, to improve code readablility, debugging and its  supports OOP. Design patterns such as Builder design pattern, Module design pattern and the Chain of responsibility design pattern was adopted.
 
 ## LIMITATIONS
 
