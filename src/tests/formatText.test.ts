@@ -1,5 +1,5 @@
 import { FormatTextBuilder } from '../model/formatTextBuilder';
-import { IFormatString } from '../model/formatTextDetails.dto';
+import { IFormatString, LineSpacing, TextAlign } from '../model/formatTextDetails.dto';
 import { BASE_URL, fetchRandomJoke, formatString } from '../util/util';
 import axios from '../__mocks__/axios'
 import { alignText, checkRandomJokesIndentifier } from '../util/util';
@@ -18,7 +18,7 @@ const data = {
 
 describe('checRandomJokesIdentifier', () => {
 
-  it('should check whether an input string is an identifier for adding random jokes to the text', () => {
+  it('should check whether an input string belonga to random joke identifier for adding random jokes to the text', () => {
     const sampleWord = 'flabby';
     const randomJokeIdentifierList = ['flabby', 'jammy']
     const isRandomJokeIdentifier = checkRandomJokesIndentifier(sampleWord, randomJokeIdentifierList);
@@ -27,7 +27,7 @@ describe('checRandomJokesIdentifier', () => {
     
   });
 
-  it('should check whether an input string with punctuation marks is an identifier for adding random jokes to the text', () => {
+  it('should check whether an input string with punctuation marks belongs to random jokes identifier for adding random jokes to the text', () => {
     const sampleWord = '-flabby-';
     const randomJokeIdentifierList = ['flabby', 'jammy']
     const isRandomJokeIdentifier = checkRandomJokesIndentifier(sampleWord, randomJokeIdentifierList);
@@ -39,7 +39,7 @@ describe('checRandomJokesIdentifier', () => {
 
 
 describe('Fetch Random Jokes', () => {
-  describe('When the API call to fetch random joke is successful', () => {
+  describe('Fetch Random Jokes Successfully', () => {
     it('should return a random Chuck Noris Joke', async () => {
       const response = ["Mr", "johnson", "is", "the", "only", "one", "who", "can", "overtake", "Chuck", "Norris", "in", "a", "moped", "race.", "Chuck", "Norris", "then", "dropkicked", "him", "continusly", "and", "killed", "him."]
       mockedAxios.get.mockImplementationOnce(() => Promise.resolve({
@@ -53,7 +53,7 @@ describe('Fetch Random Jokes', () => {
     });
   });
   
-  describe('When the API call to fetch random Joke fails ', () => {
+  describe('Fetch Random Joke Fails ', () => {
     it('should return empty joke list', async () => {
       const message = "Network Error";
       const response: any[] = []
@@ -68,10 +68,10 @@ describe('Fetch Random Jokes', () => {
   
 });
 
-describe('Format Sting Weight', () => {
+describe('Format Sting ', () => {
 
- describe('Bold', () => {
-  it('should make a string bold if it belongs to the bold string identifier', () => {
+ describe('Bold Strings', () => {
+  it('should make a string bold if it belongs to the bold string list', () => {
     const sampleWord = 'flabby';
     const boldStringIdentifier = ['flabby', 'jammy'];
     const italicStringIdentifier = ['jean'];
@@ -90,7 +90,7 @@ describe('Format Sting Weight', () => {
 
  });
   
- describe('String not matching an bold, italic or replacing identifier', () => {
+ describe('Non  matching  string as bold, italic or replacing identifier', () => {
   it('should make a string  neither bold, italics or replace string ', () => {
     const sampleWord = 'flabby';
     const boldStringIdentifier = ['jammy'];
@@ -110,7 +110,7 @@ describe('Format Sting Weight', () => {
   
  })
   
- describe('Italics', () => {
+ describe('Italics Strings', () => {
   it('should italicise a string if it belongs to the italic string identifier', () => {
     const sampleWord = 'jean';
     const boldStringIdentifier = ['flabby', 'jammy'];
@@ -133,7 +133,7 @@ describe('Format Sting Weight', () => {
   
   
  describe('Replace String', () => {
-  it('should replace a string with another string if it belongs to the replace string identifier', () => {
+  it('should replace a string with specified string if it belongs to the replace string identifier', () => {
     const sampleWord = 'cursus';
     const boldStringIdentifier = ['flabby', 'jammy'];
     const italicStringIdentifier = ['jean'];
@@ -204,7 +204,6 @@ describe('String alignment', () => {
 describe('Format String', () => {
   const lineWidth = 50
   const textAlignment = 'left';
-  const lineSpacing = { single: 'single', double: 'double' }
   const randomJokesIdentifier=["tortor", "fames"]
   const boldStrings = ['Aliquam', 'Mauris', 'Aliquam']
   const italicsStrings = ['elit']
@@ -218,12 +217,12 @@ describe('Format String', () => {
   
 
 
-  describe('Format a string based on parmeters specified such as line width ', () => {
+  describe('Format a string based on parmeters specified ', () => {
     it('should align a string with single spacing', async () => {
       const stringFormat = new FormatTextBuilder().setLineWidth(lineWidth)
       .setText(text)
-      .setTextAlignment(textAlignment)
-      .setLineSpacing(lineSpacing.single)
+      .setTextAlignment(TextAlign.LEFT)
+      .setLineSpacing(LineSpacing.SINGLE)
       .setRandomJokeIdentifier(randomJokesIdentifier)
       .setItalicsStrings(italicsStrings)
       .setBoldStrings(boldStrings)
@@ -239,15 +238,14 @@ describe('Format String', () => {
       const stringFormat = new FormatTextBuilder()
       .setLineWidth(lineWidth)
       .setText(text)
-      .setTextAlignment(textAlignment)
-      .setLineSpacing(lineSpacing.double)
+      .setTextAlignment(TextAlign.LEFT)
+      .setLineSpacing(LineSpacing.DOUBLE)
       .setRandomJokeIdentifier(randomJokesIdentifier)
       .setItalicsStrings(italicsStrings)
       .setBoldStrings(boldStrings)
       .setReplaceStrings(replaceString).build();
 
       const formatString = await stringFormat.formatText();
-      console.log(formatString)
    const result = `Lorem ipsum dolor sit amet, consectetur adipiscing\n\n_elit_. Morbi sit amet lacus eu purus malesuada   \n\ntortor sodales. Nunc a risusnunc.                 \n\nMr johnson is the only one who can overtake Chuck \n\nNorris in a moped race. Chuck Norris then         \n\ndropkicked him continusly and killed him. Praesent`
    expect(formatString).toBe(result)
    
