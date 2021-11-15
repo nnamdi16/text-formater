@@ -45,3 +45,14 @@ export interface IHandler {
   handle(request:IFormatTextParameter): Promise<IFormatTextResponse> 
 }
 
+export enum TextAlign {
+  CENTER = 'center',
+  LEFT = 'left',
+  RIGHT = 'right'
+}
+
+export enum LineSpacing {
+  SINGLE = 'single',
+  DOUBLE = 'double'
+}
+
