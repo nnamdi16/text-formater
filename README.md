@@ -10,7 +10,7 @@ Text formatter is a service designed to format text including those with line br
 * Typescript installation: Visit  [Official Typescript website](https://www.typescriptlang.org/download)  to install typescript.
 * Clone the project [Text Formatter](https://github.com/entyre-hire/backend-exercise-nnamdi16.git).
 * cd into the project folder
-* Run yarn install to install dependencies
+* Run npm install or  yarn install to install dependencies
 * To run the project or extend text formatter, see sample code below:
 
 ```apache
