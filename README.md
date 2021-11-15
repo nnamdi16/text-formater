@@ -49,4 +49,6 @@ Design the text formatter required adopting a hybrid paradigm which includes Obj
 
 ## LIMITATIONS
 
+A few branches are untested due to assigning a default handler in FormatTextDetails class.
+
 ![Branch Coverage](badge-branches.svg)![function-coverage](badge-functions.svg)![Lines coverage](badge-lines.svg)![Statement coverage](badge-statements.svg)
