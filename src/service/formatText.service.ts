@@ -1,3 +1,4 @@
+import { LineSpacing, TextAlign } from './../model/formatTextDetails.dto';
 import { FormatTextWithLineBreakHandler, FormatTextBelowLineWidthHandler, FormatTextAboveLineWidthHandler } from './formatTextHandler.service';
 import { formatString } from '../util/util';
 import { IReplaceString } from '../randomJokes.response';
@@ -14,8 +15,8 @@ export class FormatTextDetails {
   handler= formatTextWithLineBreakHandler;
   lineWidth: number;
   text: string;
-  textAlignment: string;
-  lineSpacing: string;
+  textAlignment: TextAlign;
+  lineSpacing: LineSpacing;
   italicsStrings: string[];
   boldStrings: string[];
   replaceStrings: IReplaceString;
