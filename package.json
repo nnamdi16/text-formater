@@ -6,13 +6,6 @@
     "directories": {
         "test": "tests"
     },
-    "jest": {
-        "coverageReporters": [
-            "json-summary",
-            "text",
-            "lcov"
-        ]
-    },
     "scripts": {
         "test": "jest --coverage --detectOpenHandles",
         "test:watch": "jest --coverage --watchAll",
