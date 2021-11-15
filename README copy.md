@@ -16,8 +16,6 @@ Text formatter is a service designed to format text including those with line br
 ```apache
 const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet lacus eu purus malesuada sodales. Nunc a risus nunc.\nPraesent eget volutpat eros. Fusce mollis gravida nunc, vitae accumsan ligula varius vitae. Duis in tellus non est pulvinar efficitur quis ac tortor. Aliquam dictum, magna quis venenatis pharetra, leo sapien mollis mauris, et vestibulum arcu est eget turpis. Etiam tortor erat, lacinia et faucibus vitae, maximus et elit.\nDonec nisl nisi, imperdiet vitae felis ut, maximus condimentum ante. Curabitur efficitur sem sed ligula eleifend varius. Mauris et risus quis libero mattis auctor id ut orci.\nAliquam cursus sapien et euismod vestibulum. In maximus dolor eu vulputate tempus. Aenean ultricies nisl id elit mattis, vitae finibus libero interdum. Vestibulum ornare quam nec ornare fermentum.';
 const lineWidth = 80
-const textAlignment = 'center'
-const lineSpacing = { single: 'single', double: 'double' }
 const randomJokesIdentifier = ["tortor", "fames"];
 const italicsString = ["elit"]
 const boldString = ["Aliquam", "Mauris"]
@@ -27,13 +25,12 @@ const replaceString = {
 }
 ```
 
-
 ```bash
     const stringFormat = new FormatTextBuilder()
       .setLineWidth(lineWidth)
       .setText(text)
-      .setTextAlignment(textAlignment)
-      .setLineSpacing(lineSpacing.double)
+      .setTextAlignment(TextAlign.LEFT)
+      .setLineSpacing(LineSpacing.DOUBLE)
       .setRandomJokeIdentifier(randomJokesIdentifier)
       .setItalicsStrings(italicsStrings)
       .setBoldStrings(boldStrings)
@@ -46,13 +43,10 @@ stringFormat.formatText().then(res => console.log(res))
 * Run npm run start on your CLI
 * To run the test script , run npm run test.
 
-
 ## TECHNICAL CHOICES AND TRADE-OFFS
 
 Design the text formatter required adopting a hybrid paradigm which includes Object Oriented Programming (OOP)  and Functional programming (FP) . Also Typescript was adopted relying on its advanced statical type system to improve the code readablility and debugging as well as it supports OOP. Design patterns such as Builder design pattern, Module design pattern and the Chain of responsibility design pattern was adopted.
 
 ## LIMITATIONS
-
-
 
 ![Branch Coverage](./coverage/badge-branches.svg)![function-coverage](./coverage/badge-functions.svg)![Lines coverage](coverage/badge-lines.svg)![Statement coverage](coverage/badge-statements.svg)
