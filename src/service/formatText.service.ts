@@ -9,7 +9,7 @@ import { FormatTextBuilder } from '../model/formatTextBuilder';
 const formatTextWithLineBreakHandler = new FormatTextWithLineBreakHandler();
 const formatStringLess = new FormatTextBelowLineWidthHandler();
 const formatStringGreat = new FormatTextAboveLineWidthHandler();
-formatTextWithLineBreakHandler.setNext(formatStringLess).setNext(formatStringGreat);
+formatTextWithLineBreakHandler.setNext(formatStringGreat).setNext(formatStringLess);
 
 export class FormatTextDetails {
   handler= formatTextWithLineBreakHandler;
