@@ -1,3 +1,4 @@
+import { LineSpacing, TextAlign } from './formatTextDetails.dto';
 import { FormatTextDetails } from './../service/formatText.service';
 import { IReplaceString } from '../randomJokes.response';
 
@@ -5,8 +6,8 @@ export class FormatTextBuilder {
 
   lineWidth!: number;
   text!: string;
-  textAlignment!: string;
-  lineSpacing!: string;
+  textAlignment!: TextAlign;
+  lineSpacing!: LineSpacing;
   italicsStrings!: string[];
   boldStrings!: string[];
   replaceStrings!: IReplaceString;
@@ -22,12 +23,12 @@ export class FormatTextBuilder {
       return this;
   }
 
-  setTextAlignment(textAlignment:string) {
+  setTextAlignment(textAlignment:TextAlign) {
     this.textAlignment = textAlignment;
       return this;
   }
 
-  setLineSpacing(lineSpacing: string) {
+  setLineSpacing(lineSpacing: LineSpacing) {
       this.lineSpacing = lineSpacing
       return this;
   }
