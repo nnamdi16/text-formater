@@ -1,6 +1,6 @@
-import { LineSpacing, TextAlign } from './formatTextDetails.dto';
+import { LineSpacing, TextAlign, IReplaceString } from './formatTextDetails.dto';
 import { FormatTextDetails } from './../service/formatText.service';
-import { IReplaceString } from '../randomJokes.response';
+
 
 export class FormatTextBuilder {
 
@@ -53,10 +53,6 @@ export class FormatTextBuilder {
       return this;
     }
   
-  
-  
-  
-
   
   build() {
  
