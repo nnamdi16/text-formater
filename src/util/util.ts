@@ -22,14 +22,12 @@ export const fetchRandomJoke = async(): Promise<string[]> => {
 
 
 export const formatString = (editParameters: IEditString) => {
-    const {boldStrings, italicsStrings, replaceStrings, text} = editParameters
-    const formatStringParameters = {
-        boldStringIdentifier: Array.from((new Set(boldStrings))),
-        italicStringIdentifier: Array.from((new Set(italicsStrings))),
-        stringReplacementIdentifier: replaceStrings
+    const { boldStrings, italicsStrings, replaceStrings, text } = editParameters;
+    const boldStringIdentifier = Array.from((new Set(boldStrings)));
+    const italicStringIdentifier = Array.from((new Set(italicsStrings)));
+    const stringReplacementIdentifier =  replaceStrings
 
-    }
-  const {boldStringIdentifier, italicStringIdentifier, stringReplacementIdentifier}= formatStringParameters
+
     const isBoldStringIdentifier = boldStringIdentifier.includes(text);
     const isItalicStringIdentifier = italicStringIdentifier.includes(text);
     const isreplaceStringIdentifier = Object.keys(stringReplacementIdentifier).includes(text);
