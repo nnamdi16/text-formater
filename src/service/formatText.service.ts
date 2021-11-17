@@ -1,9 +1,6 @@
-import { LineSpacing, TextAlign } from './../model/formatTextDetails.dto';
+import { IReplaceString, LineSpacing, TextAlign } from './../model/formatTextDetails.dto';
 import { FormatTextWithLineBreakHandler, FormatTextBelowLineWidthHandler, FormatTextAboveLineWidthHandler } from './formatTextHandler.service';
-import { formatString } from '../util/util';
-import { IReplaceString } from '../randomJokes.response';
-
-import { checkRandomJokesIndentifier } from '../util/util';
+import { formatString, checkRandomJokesIndentifier } from '../util/util';
 import { FormatTextBuilder } from '../model/formatTextBuilder';
 
 const formatTextWithLineBreakHandler = new FormatTextWithLineBreakHandler();
