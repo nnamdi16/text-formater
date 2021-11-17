@@ -20,7 +20,7 @@ export interface IReplaceString {
 
 export interface IFormatText extends IFormatString{
   readonly lineWidth: number;
-  readonly textAlignment: string;
+  readonly textAlignment: TextAlign
   readonly lineSpacing: string;
   readonly randomJokesIdentifier:string[]
 
@@ -48,7 +48,8 @@ export interface IHandler {
 export enum TextAlign {
   CENTER = 'center',
   LEFT = 'left',
-  RIGHT = 'right'
+  RIGHT = 'right',
+  DEFAULT = 'default'
 }
 
 export enum LineSpacing {
