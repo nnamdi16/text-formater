@@ -1,8 +1,7 @@
 import { FormatTextBuilder } from '../model/formatTextBuilder';
 import { IFormatString, LineSpacing, TextAlign } from '../model/formatTextDetails.dto';
-import { BASE_URL, fetchRandomJoke, formatString } from '../util/util';
+import { BASE_URL, fetchRandomJoke, formatString, alignText, checkRandomJokesIndentifier } from '../util/util';
 import axios from '../__mocks__/axios'
-import { alignText, checkRandomJokesIndentifier } from '../util/util';
 
 
 jest.mock("axios")
@@ -157,7 +156,7 @@ describe('String alignment', () => {
   describe('Align string Right', () => {
    it('should align a string to the right', () => {
      const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-     const formatStringAlignment = alignText(sampleWord, 60, 'RIGHT' );
+     const formatStringAlignment = alignText(sampleWord, 60, TextAlign.RIGHT ).call(TextAlign.RIGHT);
      const result = `     Lorem ipsum dolor sit amet, consectetur adipiscing elit`
      expect(formatStringAlignment).toMatch(result)
      
@@ -168,7 +167,7 @@ describe('String alignment', () => {
   describe('Align string Left', () => {
     it('should align a string to the left', () => {
       const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-      const formatStringAlignment = alignText(sampleWord, 60, 'LEFT' );
+      const formatStringAlignment = alignText(sampleWord, 60, TextAlign.LEFT ).call(TextAlign.LEFT);
       const result = `Lorem ipsum dolor sit amet, consectetur adipiscing elit     `
       expect(formatStringAlignment).toMatch(result)
       
@@ -179,7 +178,7 @@ describe('String alignment', () => {
    describe('Align string Center', () => {
     it('should align a string to the center', () => {
       const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-      const formatStringAlignment = alignText(sampleWord, 60, 'CENTER' );
+      const formatStringAlignment = alignText(sampleWord, 60, TextAlign.CENTER).call(TextAlign.CENTER);
       const result = `  Lorem ipsum dolor sit amet, consectetur adipiscing elit  `
       expect(formatStringAlignment).toMatch(result)
       
@@ -190,7 +189,7 @@ describe('String alignment', () => {
    describe('String without alignment specified', () => {
     it('should return a string with aligning it when the alignment type is not specified', () => {
       const sampleWord = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-      const formatStringAlignment = alignText(sampleWord, 60, '' );
+      const formatStringAlignment = alignText(sampleWord, 60, TextAlign.DEFAULT ).call(TextAlign.DEFAULT);
       const result = `Lorem ipsum dolor sit amet, consectetur adipiscing elit`
       expect(formatStringAlignment).toMatch(result)
       
@@ -203,7 +202,6 @@ describe('String alignment', () => {
  
 describe('Format String', () => {
   const lineWidth = 50
-  const textAlignment = 'left';
   const randomJokesIdentifier=["tortor", "fames"]
   const boldStrings = ['Aliquam', 'Mauris', 'Aliquam']
   const italicsStrings = ['elit']
