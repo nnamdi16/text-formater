@@ -60,14 +60,16 @@ export class FormatTextBelowLineWidthHandler extends AbstractHandler {
 
 
 export class FormatTextAboveLineWidthHandler extends AbstractHandler {
-  public async  handle(request: IFormatTextParameter): Promise<IFormatTextResponse> {
- if ((request.sentenceWidthCounter + request.formattedString.length) > request.lineWidth) {
-  request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlignment));
-  request.lineSentence = ` ${request.formattedString}`;
-  request.sentenceWidthCounter = 0;
-  return {lineSentence:request.lineSentence, sentenceArray:request.sentenceArray, splittedText:request.splittedText, index:request.index}
- }
- return super.handle(request);
+  
+  public async handle(request: IFormatTextParameter): Promise<IFormatTextResponse> {
+    
+    if ((request.sentenceWidthCounter + request.formattedString.length) > request.lineWidth) {
+      request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlignment));
+      request.lineSentence = ` ${request.formattedString}`;
+      request.sentenceWidthCounter = 0;
+      return {lineSentence:request.lineSentence, sentenceArray:request.sentenceArray, splittedText:request.splittedText, index:request.index}
+    }
+    return super.handle(request);
   }
 }
 
