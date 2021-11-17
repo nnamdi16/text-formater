@@ -22,9 +22,8 @@ abstract class AbstractHandler implements IHandler {
 
 export class FormatTextWithLineBreakHandler extends AbstractHandler {
    public async handle(request: IFormatTextParameter): Promise<IFormatTextResponse> {
-     if (request.formattedString?.indexOf("\n") > -1) {
+     if (request.formattedString?.includes("\n")) {
        request.lineSentence += `${request.formattedString.substring(0, request.formattedString.indexOf("\n"))}`;
-      //  console.log(request.lineSentence);
       request.sentenceArray?.push(alignText(request.lineSentence?.trim(), request.lineWidth, request.textAlignment));
       request.sentenceWidthCounter = 0;
       if (request.randomJokeCounter > 0) {
