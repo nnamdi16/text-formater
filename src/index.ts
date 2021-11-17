@@ -1,6 +1,5 @@
-
-// import { FormatTextBuilder } from "./model/formatTextBuilder";
-// import { LineSpacing, TextAlign } from "./model/formatTextDetails.dto";
+import { FormatTextBuilder } from "./model/formatTextBuilder";
+import { TextAlign, LineSpacing } from "./model/formatTextDetails.dto";
 
 
 
@@ -18,15 +17,15 @@ const replaceString = {
 
 
 
-// const stringFormat = new FormatTextBuilder()
-//       .setLineWidth(lineWidth)
-//       .setText(text)
-//       .setTextAlignment(TextAlign.RIGHT)
-//       .setLineSpacing(LineSpacing.DOUBLE)
-//       .setRandomJokeIdentifier(randomJokesIdentifier)
-//       .setItalicsStrings(italicsStrings)
-//       .setBoldStrings(boldStrings)
-//       .setReplaceStrings(replaceString).build();
+const stringFormat = new FormatTextBuilder()
+      .setLineWidth(lineWidth)
+      .setText(text)
+      .setTextAlignment(TextAlign.CENTER)
+      .setLineSpacing(LineSpacing.DOUBLE)
+      .setRandomJokeIdentifier(randomJokesIdentifier)
+      .setItalicsStrings(italicsStrings)
+      .setBoldStrings(boldStrings)
+      .setReplaceStrings(replaceString).build();
 
 
-// stringFormat.formatText().then(res => console.log(res))
+stringFormat.formatText().then(res => console.log(res))
